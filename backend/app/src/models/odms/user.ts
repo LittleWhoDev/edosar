@@ -35,6 +35,10 @@ export const UserSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: 'User',
   },
+  nrinregCrt: {
+    type: Number,
+    default: 1,
+  },
 })
 
 UserSchema.pre('save', async function (next) {

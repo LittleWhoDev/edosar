@@ -1,10 +1,36 @@
 import { Router } from 'express'
 import { rolesGuards } from 'src/auth'
+import { Statut } from 'src/models/interfaces/dosar'
 import { UserRole } from 'src/models/interfaces/user'
-import { DosarODM } from 'src/models/odms/dosar'
+import { DosarDocument, DosarODM } from 'src/models/odms/dosar'
 import { checkContract, Implication } from 'src/utils/contracts'
 
 export const router = Router()
+
+router.get('/count', ...rolesGuards(), async (req, res) => {
+  const filter = {} as Partial<DosarDocument>
+  if (req.user?.role === UserRole.CETATEAN) {
+    filter.from = req.user.id
+  } else if (req.user?.role === UserRole.PRIMARIE) {
+    filter.to = req.user.id
+  }
+
+  res.json({
+    TOTAL: await DosarODM.count({ ...filter }).exec(),
+    IN_LUCRU: await DosarODM.count({
+      ...filter,
+      status: Statut.IN_LUCRU,
+    }).exec(),
+    RESPINSE: await DosarODM.count({
+      ...filter,
+      status: Statut.RESPINS,
+    }).exec(),
+    VALIDATE: await DosarODM.count({
+      ...filter,
+      status: Statut.SOLUTIONAT,
+    }).exec(),
+  })
+})
 
 router.get('/', ...rolesGuards(), async (req, res) => {
   res.json(await DosarODM.find({}).exec())

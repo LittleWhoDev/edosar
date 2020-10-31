@@ -7,6 +7,7 @@ export interface UserInterface {
   role: UserRole
   profile: ProfileInterface
   primarie?: UserInterface
+  nrinregCrt?: number
 }
 
 export enum UserRole {

@@ -4,6 +4,7 @@ import { UserInterface } from './user'
 export interface DosarInterface {
   name: string
   sablon: SablonInterface
+  nrinreg: number
   from: UserInterface
   to: UserInterface
   statut: Statut
@@ -11,7 +12,7 @@ export interface DosarInterface {
 }
 
 export enum Statut {
-  IN_ASTEPTARE,
-  TREBUIE_REVIZUIT,
+  IN_LUCRU,
+  RESPINS,
   SOLUTIONAT,
 }
