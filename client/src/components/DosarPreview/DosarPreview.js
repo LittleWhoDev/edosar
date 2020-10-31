@@ -1,10 +1,16 @@
 import React, { useEffect, useState } from 'react';
-import { Typography, Dialog, Box } from '@material-ui/core';
+import { Typography, Dialog, Box, Button, FormControl, Input } from '@material-ui/core';
 import { statusToString } from "api/dosar"
 import { getDosar } from 'api/cetatean';
 import { downloadPath } from 'api/acte';
+import { PRIMARIE } from 'api/roles';
+import { uploadAct } from 'api/acte';
+import { updateDosar } from 'api/primarie';
 
 function DosarPreview({ dosar, onClose, open }) {
+  const [file, setFile] = useState(undefined);
+  const isPrimarie = parseInt(localStorage.getItem('role')) === PRIMARIE;
+
   const [dosarFull, setDosarFull] = useState({ sablon: { necesare: [] } });
 
   useEffect(() => {
@@ -29,6 +35,40 @@ function DosarPreview({ dosar, onClose, open }) {
             }
             return <></>
           })
+        }
+
+        {
+          (isPrimarie && dosar.status === 0) ? (<>
+            <FormControl>
+              <Button
+                variant="contained"
+                component="label"
+              >
+                Upload File
+                <input
+                  onChange={(e) => { setFile(e.target.files[0]) }}
+                  type="file"
+                  style={{ display: "none" }}
+                />
+              </Button>
+
+              <Button onClick={() => {
+                uploadAct(file).then((r) => {
+                  updateDosar(dosar._id, {
+                    actRaspuns: r.filename,
+                    status: 2,
+                  });
+                  window.location.href = "/";
+                });
+              }}> Valideaza </Button>
+              <Button onClick={() => {
+                updateDosar(dosar._id, {
+                  status: 1,
+                });
+                window.location.href = "/";
+              }}> Respinge </Button>
+            </FormControl>
+          </>) : null
         }
       </Box>
     </Dialog>

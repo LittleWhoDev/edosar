@@ -142,7 +142,7 @@ export default function Dashboard() {
               <h4 className={classes.cardTitleWhite}>Actiuni rapide</h4>
             </CardHeader>
             <CardBody>
-              <Button
+              <Button onClick={() => { window.location.href = '/admin/table' }}
                 color="primary"
                 variant="contained"
                 style={{

@@ -58,7 +58,6 @@ export default function TableList() {
     getDosare().then((dosare) => {
       const newDosare = [];
       dosare.forEach((elem, i) => {
-        if (i > 2) return;
         newDosare.push([
           i + 1,
           elem.nrinreg,
