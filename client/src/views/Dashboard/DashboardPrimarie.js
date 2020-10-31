@@ -16,8 +16,10 @@ import CardFooter from "components/Card/CardFooter.js";
 import styles from "assets/jss/material-dashboard-react/views/dashboardStyle.js";
 import { Button, Typography } from "@material-ui/core";
 
+import { statusToString } from '../../api/dosar';
 import { getStatistics, getDosare } from "../../api/cetatean";
 import { useAuth } from "api/auth";
+import DosarPreview from "components/DosarPreview/DosarPreview"
 
 const useStyles = makeStyles(styles);
 
@@ -26,6 +28,8 @@ export default function Dashboard() {
 
   const [stats, setStats] = useState({});
   const [dosare, setDosare] = useState([]);
+  const [dosarCur, setDosarCur] = useState({});
+  const [dosarViewOpen, setDosarViewOpen] = useState(false);
 
   useEffect(() => {
     getStatistics().then((stats) => {
@@ -39,12 +43,13 @@ export default function Dashboard() {
           i + 1,
           elem.nrinreg,
           elem.name,
-          {
-            0: "In lucru",
-            1: "Respins",
-            2: "Validat",
-          }[elem.status],
+          statusToString(elem.status),
           elem.createdAt,
+          <Button onClick={() => {
+            setDosarCur(elem);
+            setDosarViewOpen(true);
+          }} color="primary"
+            variant="contained">Vizualizare</Button>
         ]);
       })
       setDosare(newDosare);
@@ -111,6 +116,9 @@ export default function Dashboard() {
               <h4 className={classes.cardTitleWhite}>Ultimele 3 dosare</h4>
             </CardHeader>
             <CardBody>
+              <DosarPreview dosar={dosarCur} open={dosarViewOpen} onClose={() => {
+                setDosarViewOpen(false);
+              }} />
               <Table
                 tableHeaderColor="warning"
                 tableHead={[
@@ -119,6 +127,7 @@ export default function Dashboard() {
                   "Denumire",
                   "Stadiu",
                   "Data",
+                  "Actiuni"
                 ]}
                 tableData={dosare}
               />
@@ -127,10 +136,10 @@ export default function Dashboard() {
         </GridItem>
       </GridContainer>
       <GridContainer>
-        <GridItem xs={12} sm={12} md={6}>
+        <GridItem xs={12} sm={12} md={4}>
           <Card>
             <CardHeader color="info">
-              <h4 className={classes.cardTitleWhite}>Administreaza dosare</h4>
+              <h4 className={classes.cardTitleWhite}>Actiuni rapide</h4>
             </CardHeader>
             <CardBody>
               <Button
@@ -142,7 +151,7 @@ export default function Dashboard() {
                   margin: "1.25rem 0 1.7rem",
                 }}
               >
-                Adauga dosar
+                Administreaza dosare
               </Button>
             </CardBody>
           </Card>
