@@ -33,7 +33,7 @@ router.get('/count', ...rolesGuards(), async (req, res) => {
 })
 
 router.get('/', ...rolesGuards(), async (req, res) => {
-  res.json(await DosarODM.find({}).exec())
+  res.json(await DosarODM.find({}).sort({createdAt: 'desc'}).exec())
 })
 
 router.get('/:id', ...rolesGuards(), async (req, res) => {
