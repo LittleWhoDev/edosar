@@ -6,9 +6,18 @@ export interface UserInterface {
   email?: string
   role: UserRole
   profile: ProfileInterface
+  primarie?: UserInterface
 }
 
 export enum UserRole {
   DEFAULT,
+  CETATEAN,
+  PRIMARIE,
+  ADMIN,
 }
-export const UserRoles = [UserRole.DEFAULT]
+export const UserRoles = [
+  UserRole.DEFAULT,
+  UserRole.CETATEAN,
+  UserRole.PRIMARIE,
+  UserRole.ADMIN,
+]

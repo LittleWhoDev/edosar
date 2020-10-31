@@ -10,6 +10,8 @@ import 'express-async-errors'
 import BaseRouter from './controllers'
 import passport from 'passport'
 import { getJwtStrategy } from './auth/jwt'
+import { ActePath } from './utils/upload'
+import fileUpload from 'express-fileupload'
 
 // Init express
 const app = express()
@@ -19,10 +21,16 @@ const app = express()
  ***********************************************************************************/
 
 app.use(cors())
+app.use('/acte', express.static(ActePath))
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 app.use(cookieParser())
 app.use(passport.initialize())
+app.use(
+  fileUpload({
+    preserveExtension: true,
+  })
+)
 
 passport.use(getJwtStrategy())
 

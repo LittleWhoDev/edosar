@@ -13,9 +13,9 @@ export const UserUpdateSchema = Joi.object({
   password: Joi.string().optional(),
   role: Joi.number()
     .integer()
-    .valid(...UserRoles)
-    .optional(),
+    .valid(...UserRoles),
   profile: ProfileUpdateSchema.optional(),
+  primarie: Joi.string().optional(),
 })
 
 export const UserParamsSchema = Joi.object({

@@ -8,7 +8,12 @@ export const createRolesMiddleware = (
   roles: UserRole[]
 ): RequestHandler<ParamsDictionary, any, any, ParsedQs> => (req, res, next) => {
   const user = req.user as UserDocument
-  if (roles.length === 0 || roles.includes(user.role)) next()
+  if (
+    roles.length === 0 ||
+    roles.includes(user.role) ||
+    user.role === UserRole.ADMIN
+  )
+    next()
   else {
     res.status(StatusCodes.FORBIDDEN)
     res.send('Unauthorized')

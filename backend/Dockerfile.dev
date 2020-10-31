@@ -1,6 +1,7 @@
 FROM node:14
 
 RUN mkdir -p /usr/src/app && chown -R node:node /usr/src/app
+RUN mkdir -p /acte && chown -R node:node /acte
 
 USER node
 WORKDIR /usr/src/app

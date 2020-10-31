@@ -10,6 +10,7 @@ export const RegisterBodySchema = Joi.object({
     .integer()
     .valid(...UserRoles)
     .required(),
+  primarie: Joi.string().optional(),
 })
 
 export interface RegisterRequestDTO extends ValidatedRequestSchema {
@@ -18,6 +19,7 @@ export interface RegisterRequestDTO extends ValidatedRequestSchema {
     email?: string
     password: string
     role: UserRole
+    primarie?: string
   }
 }
 

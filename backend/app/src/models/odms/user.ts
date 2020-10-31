@@ -5,6 +5,7 @@ import { hash, compare } from 'bcrypt'
 
 export interface UserDocument extends UserInterface, Document {
   isValidPassword(password: string): Promise<boolean>
+  primarie?: UserDocument
 }
 
 export interface UserModel extends Model<UserDocument> {
@@ -30,6 +31,10 @@ export const UserSchema = new Schema({
     required: true,
   },
   profile: ProfileSchema,
+  primarie: {
+    type: Schema.Types.ObjectId,
+    ref: 'User',
+  },
 })
 
 UserSchema.pre('save', async function (next) {

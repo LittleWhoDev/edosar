@@ -51,7 +51,10 @@ router.put(
 
     checkContract([
       [user !== null, 'User not found'],
-      [user!.id === currentUser?.id, 'Forbidden'],
+      [
+        user!.id === currentUser?.id || currentUser!.role > user!.role,
+        'Forbidden',
+      ],
     ])
 
     const updated = await user?.update(req.body).exec()

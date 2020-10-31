@@ -9,6 +9,7 @@ import {
 import { UserODM } from 'src/models/odms/user'
 import { ValidatedRequest } from 'express-joi-validation'
 import validator from 'src/models/dtos/validator'
+import { UserRole } from 'src/models/interfaces/user'
 
 export const router = Router()
 
@@ -16,13 +17,24 @@ router.post(
   '/register',
   validator.body(RegisterBodySchema),
   async (req: ValidatedRequest<RegisterRequestDTO>, res) => {
-    const user = await UserODM.create({
+    const data = {
       ...req.body,
       profile: {
         headline: 'New user',
-        description: 'I am new to HelpingAngel!',
+        description: 'Empty',
       },
-    })
+    } as any
+
+    if (data.role === UserRole.CETATEAN) {
+      const primarieName = data.primarie as string
+      const primarie = await UserODM.findOne({
+        username: primarieName,
+        role: UserRole.PRIMARIE,
+      }).exec()
+      data.primarie = primarie?.id
+    }
+
+    const user = await UserODM.create(data)
     res.json(user)
   }
 )
