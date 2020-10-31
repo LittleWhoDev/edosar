@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 // @material-ui/core components
 import { makeStyles } from "@material-ui/core/styles";
@@ -10,7 +10,8 @@ import Card from "components/Card/Card.js";
 import CardHeader from "components/Card/CardHeader.js";
 import CardBody from "components/Card/CardBody.js";
 
-import {getDosare} from "../../api/cetatean";
+import { getDosare } from "../../api/cetatean";
+import { useAuth } from "api/auth";
 
 const styles = {
   cardCategoryWhite: {
@@ -44,31 +45,28 @@ const styles = {
 
 const useStyles = makeStyles(styles);
 
-const token =  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVmOWRhYjg4MGI1Y2U0MGRmZTIzYjZmMSIsInVzZXJuYW1lIjoiY2V0YXRlYW51bCB4IiwiaWF0IjoxNjA0MTY4NTk3fQ.dpiqkUgd-azn6WT-4Wib3oZ8yuWGqt5XPpHY7mnMO5o";
-
 export default function TableList() {
-  axios.defaults.headers.common["Authorization"] = "Bearer " + token;
-
+  useAuth();
   const [dosare, setDosare] = useState([]);
 
   useEffect(() => {
-      getDosare().then((dosare) => {
-          const newDosare = [];
-          dosare.forEach((elem, i) => {
-              newDosare.push([
-                  i+1,
-                  elem.nrinreg,
-                  elem.name,
-                  {
-                      0: "In lucru",
-                      1: "Respins",
-                      2: "Validat",
-                  }[elem.status],
-                  elem.createdAt,
-              ]);
-          })
-          setDosare(newDosare);
-      });
+    getDosare().then((dosare) => {
+      const newDosare = [];
+      dosare.forEach((elem, i) => {
+        newDosare.push([
+          i + 1,
+          elem.nrinreg,
+          elem.name,
+          {
+            0: "In lucru",
+            1: "Respins",
+            2: "Validat",
+          }[elem.status],
+          elem.createdAt,
+        ]);
+      })
+      setDosare(newDosare);
+    });
   }, []);
 
   const classes = useStyles();

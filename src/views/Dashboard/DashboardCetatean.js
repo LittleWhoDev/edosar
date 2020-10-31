@@ -15,43 +15,41 @@ import CardFooter from "components/Card/CardFooter.js";
 
 import styles from "assets/jss/material-dashboard-react/views/dashboardStyle.js";
 import { Button, Typography } from "@material-ui/core";
-import axios from "axios";
 
 import { getStatistics, getDosare } from "../../api/cetatean";
+import { useAuth } from "api/auth";
 
 const useStyles = makeStyles(styles);
 
-const token =
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVmOWRhYjg4MGI1Y2U0MGRmZTIzYjZmMSIsInVzZXJuYW1lIjoiY2V0YXRlYW51bCB4IiwiaWF0IjoxNjA0MTY4NTk3fQ.dpiqkUgd-azn6WT-4Wib3oZ8yuWGqt5XPpHY7mnMO5o";
 
 export default function Dashboard() {
-  axios.defaults.headers.common["Authorization"] = "Bearer " + token;
+  useAuth();
 
   const [stats, setStats] = useState({});
   const [dosare, setDosare] = useState([]);
 
   useEffect(() => {
-      getStatistics().then((stats) => {
-          setStats(stats)
-      });
-      getDosare().then((dosare) => {
-          const newDosare = [];
-          dosare.forEach((elem, i) => {
-              if (i > 2) return ;
-              newDosare.push([
-                  i+1,
-                  elem.nrinreg,
-                  elem.name,
-                  {
-                      0: "In lucru",
-                      1: "Respins",
-                      2: "Validat",
-                  }[elem.status],
-                  elem.createdAt,
-              ]);
-          })
-          setDosare(newDosare);
-      });
+    getStatistics().then((stats) => {
+      setStats(stats)
+    });
+    getDosare().then((dosare) => {
+      const newDosare = [];
+      dosare.forEach((elem, i) => {
+        if (i > 2) return;
+        newDosare.push([
+          i + 1,
+          elem.nrinreg,
+          elem.name,
+          {
+            0: "In lucru",
+            1: "Respins",
+            2: "Validat",
+          }[elem.status],
+          elem.createdAt,
+        ]);
+      })
+      setDosare(newDosare);
+    });
   }, []);
 
   const classes = useStyles();
