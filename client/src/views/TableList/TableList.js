@@ -1,4 +1,5 @@
-import React from "react";
+import React, {useState, useEffect} from "react";
+import axios from "axios";
 // @material-ui/core components
 import { makeStyles } from "@material-ui/core/styles";
 // core components
@@ -8,6 +9,8 @@ import Table from "components/Table/Table.js";
 import Card from "components/Card/Card.js";
 import CardHeader from "components/Card/CardHeader.js";
 import CardBody from "components/Card/CardBody.js";
+
+import {getDosare} from "../../api/cetatean";
 
 const styles = {
   cardCategoryWhite: {
@@ -41,7 +44,33 @@ const styles = {
 
 const useStyles = makeStyles(styles);
 
+const token =  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVmOWRhYjg4MGI1Y2U0MGRmZTIzYjZmMSIsInVzZXJuYW1lIjoiY2V0YXRlYW51bCB4IiwiaWF0IjoxNjA0MTY4NTk3fQ.dpiqkUgd-azn6WT-4Wib3oZ8yuWGqt5XPpHY7mnMO5o";
+
 export default function TableList() {
+  axios.defaults.headers.common["Authorization"] = "Bearer " + token;
+
+  const [dosare, setDosare] = useState([]);
+
+  useEffect(() => {
+      getDosare().then((dosare) => {
+          const newDosare = [];
+          dosare.forEach((elem, i) => {
+              newDosare.push([
+                  i+1,
+                  elem.nrinreg,
+                  elem.name,
+                  {
+                      0: "In lucru",
+                      1: "Respins",
+                      2: "Validat",
+                  }[elem.status],
+                  elem.createdAt,
+              ]);
+          })
+          setDosare(newDosare);
+      });
+  }, []);
+
   const classes = useStyles();
   return (
     <GridContainer>
@@ -57,14 +86,7 @@ export default function TableList() {
             <Table
               tableHeaderColor="primary"
               tableHead={["Nr. Crt", "Nr. Inreg", "Denumire", "Stadiu", "Data"]}
-              tableData={[
-                ["Dakota Rice", "Niger", "Oud-Turnhout", "$36,738"],
-                ["Minerva Hooper", "Curaçao", "Sinaai-Waas", "$23,789"],
-                ["Sage Rodriguez", "Netherlands", "Baileux", "$56,142"],
-                ["Philip Chaney", "Korea, South", "Overland Park", "$38,735"],
-                ["Doris Greene", "Malawi", "Feldkirchen in Kärnten", "$63,542"],
-                ["Mason Porter", "Chile", "Gloucester", "$78,615"]
-              ]}
+              tableData={dosare}
             />
           </CardBody>
         </Card>
