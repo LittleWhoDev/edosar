@@ -1,0 +1,1 @@
+export const downloadPath = "http://localhost:3000/acte";
