@@ -25,7 +25,7 @@ import Notifications from "@material-ui/icons/Notifications";
 import Unarchive from "@material-ui/icons/Unarchive";
 import Language from "@material-ui/icons/Language";
 // core components/views for Admin layout
-import DashboardPage from "views/Dashboard/Dashboard.js";
+import DashboardPage from "views/Dashboard/DashboardCetatean.js";
 import UserProfile from "views/UserProfile/UserProfile.js";
 import TableList from "views/TableList/TableList.js";
 import Typography from "views/Typography/Typography.js";
@@ -38,7 +38,7 @@ import RTLPage from "views/RTLPage/RTLPage.js";
 const dashboardRoutes = [
   {
     path: "/dashboard",
-    name: "Dashboard",
+    name: "Panou de control",
     rtlName: "لوحة القيادة",
     icon: Dashboard,
     component: DashboardPage,
@@ -46,7 +46,7 @@ const dashboardRoutes = [
   },
   {
     path: "/user",
-    name: "User Profile",
+    name: "Date personale",
     rtlName: "ملف تعريفي للمستخدم",
     icon: Person,
     component: UserProfile,
@@ -54,7 +54,7 @@ const dashboardRoutes = [
   },
   {
     path: "/table",
-    name: "Table List",
+    name: "Dosarele tale",
     rtlName: "قائمة الجدول",
     icon: "content_paste",
     component: TableList,
