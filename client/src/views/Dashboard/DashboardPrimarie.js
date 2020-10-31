@@ -1,14 +1,7 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 // @material-ui/core
 import { makeStyles } from "@material-ui/core/styles";
 import Icon from "@material-ui/core/Icon";
-// @material-ui/icons
-import Store from "@material-ui/icons/Store";
-import Warning from "@material-ui/icons/Warning";
-import DateRange from "@material-ui/icons/DateRange";
-import LocalOffer from "@material-ui/icons/LocalOffer";
-import Update from "@material-ui/icons/Update";
-import Accessibility from "@material-ui/icons/Accessibility";
 // core components
 import GridItem from "components/Grid/GridItem.js";
 import GridContainer from "components/Grid/GridContainer.js";
@@ -23,9 +16,41 @@ import CardFooter from "components/Card/CardFooter.js";
 import styles from "assets/jss/material-dashboard-react/views/dashboardStyle.js";
 import { Button, Typography } from "@material-ui/core";
 
+import { getStatistics, getDosare } from "../../api/cetatean";
+import { useAuth } from "api/auth";
+
 const useStyles = makeStyles(styles);
 
 export default function Dashboard() {
+  useAuth();
+
+  const [stats, setStats] = useState({});
+  const [dosare, setDosare] = useState([]);
+
+  useEffect(() => {
+    getStatistics().then((stats) => {
+      setStats(stats)
+    });
+    getDosare().then((dosare) => {
+      const newDosare = [];
+      dosare.forEach((elem, i) => {
+        if (i > 2) return;
+        newDosare.push([
+          i + 1,
+          elem.nrinreg,
+          elem.name,
+          {
+            0: "In lucru",
+            1: "Respins",
+            2: "Validat",
+          }[elem.status],
+          elem.createdAt,
+        ]);
+      })
+      setDosare(newDosare);
+    });
+  }, []);
+
   const classes = useStyles();
   return (
     <div>
@@ -36,50 +61,46 @@ export default function Dashboard() {
               <CardIcon color="warning">
                 <Icon>content_copy</Icon>
               </CardIcon>
-              <p className={classes.cardCategory}>Depuse</p>
-              <h3 className={classes.cardTitle}>
-                49/50 
-              </h3>
+              <p className={classes.cardCategory}>Dosare depuse</p>
+              <h3 className={classes.cardTitle}>{stats['TOTAL']}</h3>
             </CardHeader>
+            <CardFooter />
           </Card>
         </GridItem>
         <GridItem xs={12} sm={6} md={3}>
           <Card>
             <CardHeader color="info" stats icon>
               <CardIcon color="info">
-                <Store />
+                <Icon>find_in_page</Icon>
               </CardIcon>
-              <p className={classes.cardCategory}>In asteptare</p>
-              <h3 className={classes.cardTitle}>
-                49/50 
-              </h3>
+              <p className={classes.cardCategory}>Dosare in lucru</p>
+              <h3 className={classes.cardTitle}>{stats['IN_LUCRU']}</h3>
             </CardHeader>
+            <CardFooter />
           </Card>
         </GridItem>
         <GridItem xs={12} sm={6} md={3}>
           <Card>
             <CardHeader color="success" stats icon>
               <CardIcon color="success">
-                <Icon>info_outline</Icon>
+                <Icon>done_all</Icon>
               </CardIcon>
-              <p className={classes.cardCategory}>Acceptate</p>
-              <h3 className={classes.cardTitle}>
-                49/50 
-              </h3>
+              <p className={classes.cardCategory}>Dosare validate</p>
+              <h3 className={classes.cardTitle}>{stats['VALIDATE']}</h3>
             </CardHeader>
+            <CardFooter />
           </Card>
         </GridItem>
         <GridItem xs={12} sm={6} md={3}>
           <Card>
             <CardHeader color="danger" stats icon>
               <CardIcon color="danger">
-                <Accessibility />
+                <Icon>highlight_off</Icon>
               </CardIcon>
-              <p className={classes.cardCategory}>Respinse</p>
-              <h3 className={classes.cardTitle}>
-                49/50 
-              </h3>
+              <p className={classes.cardCategory}>Dosare respinse</p>
+              <h3 className={classes.cardTitle}>{stats['RESPINSE']}</h3>
             </CardHeader>
+            <CardFooter />
           </Card>
         </GridItem>
       </GridContainer>
@@ -87,52 +108,46 @@ export default function Dashboard() {
         <GridItem xs={12} sm={12} md={12}>
           <Card>
             <CardHeader color="warning">
-              <h4 className={classes.cardTitleWhite}>Ultimele dosare</h4>
+              <h4 className={classes.cardTitleWhite}>Ultimele 3 dosare</h4>
             </CardHeader>
             <CardBody>
               <Table
                 tableHeaderColor="warning"
-                tableHead={["ID", "Name", "Salary", "Country"]}
-                tableData={[
-                  ["1", "Dakota Rice", "$36,738", "Niger"],
-                  ["2", "Minerva Hooper", "$23,789", "Curaçao"],
-                  ["3", "Sage Rodriguez", "$56,142", "Netherlands"],
-                  ["4", "Philip Chaney", "$38,735", "Korea, South"]
+                tableHead={[
+                  "Nr. Crt",
+                  "Nr. Inreg",
+                  "Denumire",
+                  "Stadiu",
+                  "Data",
                 ]}
+                tableData={dosare}
               />
             </CardBody>
           </Card>
         </GridItem>
       </GridContainer>
       <GridContainer>
-        <GridItem xs={12} sm={12} md={12}>
+        <GridItem xs={12} sm={12} md={6}>
           <Card>
             <CardHeader color="info">
-              <h4 className={classes.cardTitleWhite}>Contact primarie</h4>
+              <h4 className={classes.cardTitleWhite}>Administreaza dosare</h4>
             </CardHeader>
             <CardBody>
-              <Typography variant="body1">
-                Bucuresti,
-                <br/>
-                Sector 3,
-                <br/>
-                Strada Carol Davila Nr.55
-              </Typography>
+              <Button
+                color="primary"
+                variant="contained"
+                style={{
+                  width: "100%",
+                  height: "3rem",
+                  margin: "1.25rem 0 1.7rem",
+                }}
+              >
+                Adauga dosar
+              </Button>
             </CardBody>
           </Card>
         </GridItem>
       </GridContainer>
-      <GridContainer >
-          <GridItem xs={12} sm={12} md={12} >
-            <Card>
-              <CardBody>
-                <Button color="primary" variant="contained" style={{ width: '100%', height:'3rem'}} >
-                  Adauga document
-                </Button>
-              </CardBody>
-            </Card>
-          </GridItem>
-        </GridContainer>
     </div>
   );
 }
