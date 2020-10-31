@@ -8,6 +8,8 @@ export interface DosarInterface {
   from: UserInterface
   to: UserInterface
   statut: Statut
+  raspuns: string
+  actRaspuns: string
   [key: string]: any
 }
 

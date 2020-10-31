@@ -28,6 +28,8 @@ export const DosarSchema = new Schema(
       type: Statut,
       default: Statut.IN_LUCRU,
     },
+    raspuns: String,
+    actRaspuns: String,
   },
   { timestamps: true, strict: false }
 )
@@ -41,6 +43,8 @@ DosarSchema.pre('save', async function (next) {
   }).exec()
 
   dosar.nrinreg = primarie!.nrinregCrt as number
+
+  next();
 })
 
 export const DosarODM = model<DosarDocument>('Dosar', DosarSchema)

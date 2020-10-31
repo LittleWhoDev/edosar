@@ -44,14 +44,14 @@ const dashboardRoutes = [
     component: DashboardPage,
     layout: "/admin"
   },
-  {
+  /*{
     path: "/user",
     name: "Date personale",
     rtlName: "ملف تعريفي للمستخدم",
     icon: Person,
     component: UserProfile,
     layout: "/admin"
-  },
+  },*/
   {
     path: "/table",
     name: "Dosarele tale",
