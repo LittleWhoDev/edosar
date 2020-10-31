@@ -33,7 +33,14 @@ router.get('/count', ...rolesGuards(), async (req, res) => {
 })
 
 router.get('/', ...rolesGuards(), async (req, res) => {
-  res.json(await DosarODM.find({}).sort({createdAt: 'desc'}).exec())
+  const filter = {} as Partial<DosarDocument>
+  if (req.user?.role === UserRole.CETATEAN) {
+    filter.from = req.user.id
+  } else if (req.user?.role === UserRole.PRIMARIE) {
+    filter.to = req.user.id
+  }
+
+  res.json(await DosarODM.find(filter).sort({ createdAt: 'desc' }).exec())
 })
 
 router.get('/:id', ...rolesGuards(), async (req, res) => {
