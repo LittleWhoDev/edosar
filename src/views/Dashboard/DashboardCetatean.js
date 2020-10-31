@@ -18,6 +18,8 @@ import { Button, Typography } from "@material-ui/core";
 
 import { getStatistics, getDosare } from "../../api/cetatean";
 import { useAuth } from "api/auth";
+import { statusToString } from "api/dosar";
+import DosarPreview from "components/DosarPreview/DosarPreview"
 
 const useStyles = makeStyles(styles);
 
@@ -27,6 +29,8 @@ export default function Dashboard() {
 
   const [stats, setStats] = useState({});
   const [dosare, setDosare] = useState([]);
+  const [dosarCur, setDosarCur] = useState({});
+  const [dosarViewOpen, setDosarViewOpen] = useState(false);
 
   useEffect(() => {
     getStatistics().then((stats) => {
@@ -40,12 +44,13 @@ export default function Dashboard() {
           i + 1,
           elem.nrinreg,
           elem.name,
-          {
-            0: "In lucru",
-            1: "Respins",
-            2: "Validat",
-          }[elem.status],
+          statusToString(elem.status),
           elem.createdAt,
+          <Button onClick={() => {
+            setDosarCur(elem);
+            setDosarViewOpen(true);
+          }} color="primary"
+            variant="contained">Vizualizare</Button>
         ]);
       })
       setDosare(newDosare);
@@ -112,6 +117,9 @@ export default function Dashboard() {
               <h4 className={classes.cardTitleWhite}>Ultimele 3 dosare</h4>
             </CardHeader>
             <CardBody>
+              <DosarPreview dosar={dosarCur} open={dosarViewOpen} onClose={() => {
+                setDosarViewOpen(false);
+              }} />
               <Table
                 tableHeaderColor="warning"
                 tableHead={[
@@ -120,6 +128,7 @@ export default function Dashboard() {
                   "Denumire",
                   "Stadiu",
                   "Data",
+                  "Actiuni"
                 ]}
                 tableData={dosare}
               />

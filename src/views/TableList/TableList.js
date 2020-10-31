@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 // @material-ui/core components
 import { makeStyles } from "@material-ui/core/styles";
+import { Button } from "@material-ui/core";
 // core components
 import GridItem from "components/Grid/GridItem.js";
 import GridContainer from "components/Grid/GridContainer.js";
@@ -10,8 +11,10 @@ import Card from "components/Card/Card.js";
 import CardHeader from "components/Card/CardHeader.js";
 import CardBody from "components/Card/CardBody.js";
 
-import { getDosare } from "../../api/cetatean";
+import { getStatistics, getDosare } from "../../api/cetatean";
 import { useAuth } from "api/auth";
+import { statusToString } from "api/dosar";
+import DosarPreview from "components/DosarPreview/DosarPreview"
 
 const styles = {
   cardCategoryWhite: {
@@ -48,21 +51,25 @@ const useStyles = makeStyles(styles);
 export default function TableList() {
   useAuth();
   const [dosare, setDosare] = useState([]);
+  const [dosarCur, setDosarCur] = useState({});
+  const [dosarViewOpen, setDosarViewOpen] = useState(false);
 
   useEffect(() => {
     getDosare().then((dosare) => {
       const newDosare = [];
       dosare.forEach((elem, i) => {
+        if (i > 2) return;
         newDosare.push([
           i + 1,
           elem.nrinreg,
           elem.name,
-          {
-            0: "In lucru",
-            1: "Respins",
-            2: "Validat",
-          }[elem.status],
+          statusToString(elem.status),
           elem.createdAt,
+          <Button onClick={() => {
+            setDosarCur(elem);
+            setDosarViewOpen(true);
+          }} color="primary"
+            variant="contained">Vizualizare</Button>
         ]);
       })
       setDosare(newDosare);
@@ -81,9 +88,12 @@ export default function TableList() {
             </p>
           </CardHeader>
           <CardBody>
+            <DosarPreview dosar={dosarCur} open={dosarViewOpen} onClose={() => {
+              setDosarViewOpen(false);
+            }} />
             <Table
               tableHeaderColor="primary"
-              tableHead={["Nr. Crt", "Nr. Inreg", "Denumire", "Stadiu", "Data"]}
+              tableHead={["Nr. Crt", "Nr. Inreg", "Denumire", "Stadiu", "Data", "Actiuni"]}
               tableData={dosare}
             />
           </CardBody>
