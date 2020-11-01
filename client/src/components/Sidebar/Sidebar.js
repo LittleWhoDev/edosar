@@ -61,12 +61,12 @@ export default function Sidebar(props) {
                   {prop.icon}
                 </Icon>
               ) : (
-                <prop.icon
-                  className={classNames(classes.itemIcon, whiteFontClasses, {
-                    [classes.itemIconRTL]: props.rtlActive
-                  })}
-                />
-              )}
+                  <prop.icon
+                    className={classNames(classes.itemIcon, whiteFontClasses, {
+                      [classes.itemIconRTL]: props.rtlActive
+                    })}
+                  />
+                )}
               <ListItemText
                 primary={props.rtlActive ? prop.rtlName : prop.name}
                 className={classNames(classes.itemText, whiteFontClasses, {
@@ -81,19 +81,15 @@ export default function Sidebar(props) {
     </List>
   );
   var brand = (
-    <div className={classes.logo}>
-      <a
-        href="https://www.creative-tim.com?ref=mdr-sidebar"
-        className={classNames(classes.logoLink, {
-          [classes.logoLinkRTL]: props.rtlActive
-        })}
-        target="_blank"
-      >
-        <div className={classes.logoImage}>
-          <img src={logo} alt="logo" className={classes.img} />
-        </div>
+    <div className={classes.logo} style={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center" }}>
+
+      <div className={classes.logoImage} style={{ marginBottom: '1rem' }} >
+        <img src={logo} alt="logo" className={classes.img} style={{ width: "3rem", position: 'relative', left: "-0.6rem" }} />
+      </div>
+      <br />
+      <p style={{ color: "white", textAlign: "center" }}>
         {logoText}
-      </a>
+      </p>
     </div>
   );
   return (

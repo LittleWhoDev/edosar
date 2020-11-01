@@ -22,7 +22,7 @@ services:
     volumes:
       - ./app:/usr/src/app
     ports:
-      - 5005:3000
+      - 3000:3000
     depends_on:
       - db
     command: npm run start:dev
