@@ -35,8 +35,10 @@ import Maps from "views/Maps/Maps.js";
 import NotificationsPage from "views/Notifications/Notifications.js";
 // core components/views for RTL layout
 import RTLPage from "views/RTLPage/RTLPage.js";
+import { CETATEAN } from "api/roles";
+import { PRIMARIE } from "api/roles";
 
-const dashboardRoutes = [
+const dashboardRoutesCetatean = [
   {
     path: "/dashboard",
     name: "Panou de control",
@@ -45,14 +47,6 @@ const dashboardRoutes = [
     component: DashboardPage,
     layout: "/admin"
   },
-  /*{
-    path: "/user",
-    name: "Date personale",
-    rtlName: "ملف تعريفي للمستخدم",
-    icon: Person,
-    component: UserProfile,
-    layout: "/admin"
-  },*/
   {
     path: "/table",
     name: "Dosarele tale",
@@ -64,11 +58,40 @@ const dashboardRoutes = [
   {
     path: "/sabloane",
     rtlName: "قائمة الجدول",
-    name: "Sabloane",
+    name: "Depune dosare",
     icon: "content_paste",
     component: Sabloane,
     layout: "/admin",
   }
 ];
+
+const dashboardRoutesPrimarie = [
+  {
+    path: "/dashboard",
+    name: "Panou de control",
+    rtlName: "لوحة القيادة",
+    icon: Dashboard,
+    component: DashboardPage,
+    layout: "/admin"
+  },
+  {
+    path: "/table",
+    name: "Dosarele tale",
+    rtlName: "قائمة الجدول",
+    icon: "content_paste",
+    component: TableList,
+    layout: "/admin"
+  },
+  {
+    path: "/sabloane",
+    rtlName: "قائمة الجدول",
+    name: "Administreaza sabloane",
+    icon: "content_paste",
+    component: Sabloane,
+    layout: "/admin",
+  }
+]
+
+const dashboardRoutes = parseInt(localStorage.getItem("role")) === CETATEAN ? dashboardRoutesCetatean : dashboardRoutesPrimarie;
 
 export default dashboardRoutes;
