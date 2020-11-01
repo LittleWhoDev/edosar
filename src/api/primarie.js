@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const apiBase = "http://localhost:3000";
+const apiBase = "http://localhost:5005";
 
 export async function updateDosar(id, data) {
     const r = await axios.put(`${apiBase}/dosar/${id}`, data);
