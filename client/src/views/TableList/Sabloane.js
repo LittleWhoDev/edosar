@@ -11,10 +11,14 @@ import Card from "components/Card/Card.js";
 import CardHeader from "components/Card/CardHeader.js";
 import CardBody from "components/Card/CardBody.js";
 
+import FieldGenerator from "components/FieldGenerator/FieldGenerator.js";
+
 import { useAuth } from "api/auth";
 import DosarPreview from "components/DosarPreview/DosarPreview"
 import { getSabloane } from "api/cetatean";
 import DosarSubmit from "components/DosarSubmit/DosarSubmit";
+import { CETATEAN } from "api/roles";
+import { PRIMARIE } from "api/roles";
 
 const styles = {
   cardCategoryWhite: {
@@ -54,12 +58,15 @@ export default function Sabloane() {
   const [openDosarSubmit, setOpenDosarSubmit] = useState(false);
   const [sablonCur, setSablonCur] = useState({ necesare: [] });
 
+  const role = parseInt(localStorage.getItem("role"));
   useEffect(() => {
     getSabloane().then((r) => {
       const kasd = [];
       r.forEach((elem, i) => {
-        kasd.push([i + 1, elem.name, <Button onClick={() => { setSablonCur(elem); setOpenDosarSubmit(true) }} color="primary"
-          variant="contained">Depune dosar</Button>]);
+        kasd.push([i + 1, elem.name,
+        role === CETATEAN ?
+          <Button onClick={() => { setSablonCur(elem); setOpenDosarSubmit(true) }} color="primary"
+            variant="contained">Depune dosar</Button> : <Button color="primary" variant="contained">Editeaza</Button>]);
       })
       setSabloane(kasd);
     })
@@ -68,10 +75,13 @@ export default function Sabloane() {
   const classes = useStyles();
   return (
     <GridContainer>
+      {role === PRIMARIE ? <GridItem xs={12} sm={12} md={12}>
+        <FieldGenerator />
+      </GridItem> : null}
       <GridItem xs={12} sm={12} md={12}>
         <Card>
           <CardHeader color="primary">
-            <h4 className={classes.cardTitleWhite}>Depune dosar</h4>
+            <h4 className={classes.cardTitleWhite}>{role === CETATEAN ? "Depune dosar" : "Vizualizeaza sabloane"}</h4>
             <p className={classes.cardCategoryWhite}>
               ...
             </p>

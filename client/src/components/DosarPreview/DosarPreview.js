@@ -70,6 +70,12 @@ function DosarPreview({ dosar, onClose, open }) {
             </FormControl>
           </>) : null
         }
+
+        {
+          (!isPrimarie && dosar.status === 2) ? (<>
+            <Typography variant="body1">Raspuns: <a href={`${downloadPath}/${dosarFull.actRaspuns}`}> Vizualizeaza document </a> </Typography>
+          </>) : null
+        }
       </Box>
     </Dialog>
   );
