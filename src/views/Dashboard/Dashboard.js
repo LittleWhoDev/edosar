@@ -6,7 +6,7 @@ import { default as DashboardCetatean } from './DashboardCetatean';
 import { default as DashboardPrimarie } from './DashboardPrimarie';
 
 export default function DashboardPage() {
-    localStorage.setItem("role", PRIMARIE);
+    localStorage.setItem("role", CETATEAN);
     const role = parseInt(localStorage.getItem("role"));
     if (role === CETATEAN) return <DashboardCetatean />
     if (role === PRIMARIE) return <DashboardPrimarie />

@@ -174,6 +174,7 @@ export default function Dashboard() {
                   height: "3rem",
                   margin: "1.25rem 0 1.7rem",
                 }}
+                onClick={() => { window.location.href = '/admin/sabloane' }}
               >
                 Adauga dosar
               </Button>
