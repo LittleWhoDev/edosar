@@ -51,14 +51,23 @@ function DosarPreview () {
   const [lastField, setLastField] = useState(defaultLastField);
   const [titluDosar, setTitluDosar] = useState("Titlu dosar");
   
+  let maxId = fields !== [] ? Math.max.apply(Math, fields.map(function(o) { return o.id; })) : 0;
+
   function handleAddField() {
-    setFields([...fields, lastField])
+    maxId = maxId + 1;
+    setFields([...fields, {...lastField, id: maxId }])
     setLastField(defaultLastField);
   }
 
+  function handleAddSablon() {
+    let sablon = { titluDosar : titluDosar, campuri : fields }
+    console.log(sablon);
+  }
+
   function handleChangeField(id, val) {
-    console.log({...fields[id], ...val})
-    //setFields({...fields, ...{...fields[id], ...val} })
+    let variab = fields.map(elem => (elem.id === id) ? {...elem, ...val} : elem)
+    setFields(variab)
+    console.log(variab)
   }
 
   var options = ["text", "file"]
@@ -94,7 +103,7 @@ function DosarPreview () {
       </CardBody>
       <CardFooter>
         <Button onClick={handleAddField} variant="contained" color="primary">Adauga camp</Button>
-        <Button variant="contained" color="primary">Finalizare sablon</Button>
+        <Button onClick={handleAddSablon} variant="contained" color="primary">Finalizare sablon</Button>
       </CardFooter>
     </Card>
   );
