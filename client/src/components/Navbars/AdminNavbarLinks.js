@@ -197,23 +197,43 @@ export default function AdminNavbarLinks() {
                   <MenuList role="menu">
                     <MenuItem
                       onClick={() => {
-                        localStorage.setItem("token", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVmOWRhYjg4MGI1Y2U0MGRmZTIzYjZmMSIsInVzZXJuYW1lIjoiY2V0YXRlYW51bCB4IiwiaWF0IjoxNjA0MjE0Nzc4fQ.yS_aC7gUL7IPFRc24fMvD3uXp83nmEmgZiuEnu3tt3g");
-                        localStorage.setItem("role", CETATEAN);
-                        window.location.href = '/';
-                      }}
-                      className={classes.dropdownItem}
-                    >
-                      Cetatean
-                    </MenuItem>
-                    <MenuItem
-                      onClick={() => {
-                        localStorage.setItem("token", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVmOWRhM2VmYWJjNjFlMGI0ZjM3Y2Q3ZSIsInVzZXJuYW1lIjoicHJpbWFyaWEgeCIsImlhdCI6MTYwNDIxNDgzM30.3vonUTIVPhEwCjRkuq9Fyby9OSd_zKHZgdaz9-tUX3U");
+                        localStorage.setItem("token", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVmOWRhM2VmYWJjNjFlMGI0ZjM3Y2Q3ZSIsInVzZXJuYW1lIjoiUHJpbWFyaWEgTXVuaWNpcGl1bHVpIEJ1Y3VyZXN0aSIsImlhdCI6MTYwNDIxODIxM30.E7c9ll3-t1ELB5auFAbUPHUq0lQ_feVQmgwZbf6o3lE");
                         localStorage.setItem("role", PRIMARIE);
                         window.location.href = '/';
                       }}
                       className={classes.dropdownItem}
                     >
-                      Primarie
+                      Primaria Municipiului Bucuresti
+                    </MenuItem>
+                    <MenuItem
+                      onClick={() => {
+                        localStorage.setItem("token", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVmOWRhYjg4MGI1Y2U0MGRmZTIzYjZmMSIsInVzZXJuYW1lIjoiSWxpZSBMZW9uYXJkIEFuZHJlaSIsImlhdCI6MTYwNDIxOTcyNH0.tQbQlkCUfCBgSMNBpYY4Lym-Yo3AzAkE3y6lG-CzSVM");
+                        localStorage.setItem("role", CETATEAN);
+                        window.location.href = '/';
+                      }}
+                      className={classes.dropdownItem}
+                    >
+                      Cetatean Andrei Leonard Ilie
+                    </MenuItem>
+                    <MenuItem
+                      onClick={() => {
+                        localStorage.setItem("token", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVmOWU2YWQ5ODU4NmNmMDEyYzNiOTU3ZCIsInVzZXJuYW1lIjoiQWRyaWFuIEFkYW0iLCJpYXQiOjE2MDQyMTk5MDV9.E0b07AxWDlgwlnpuRPn6s7hETX3kbjJW25fzM2TSVvs");
+                        localStorage.setItem("role", CETATEAN);
+                        window.location.href = '/';
+                      }}
+                      className={classes.dropdownItem}
+                    >
+                      Cetatean Adrian Adam
+                    </MenuItem>
+                    <MenuItem
+                      onClick={() => {
+                        localStorage.setItem("token", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVmOWU2YWU1ODU4NmNmMDEyYzNiOTU4MCIsInVzZXJuYW1lIjoiRmVyYXJ1IE1paGFpbCIsImlhdCI6MTYwNDIxOTc5N30.bQ8OdipQRM0ap5EHfuxYorPDjkHQLjEev5GCaPaGnLY");
+                        localStorage.setItem("role", CETATEAN);
+                        window.location.href = '/';
+                      }}
+                      className={classes.dropdownItem}
+                    >
+                      Cetatean Mihail Feraru
                     </MenuItem>
                   </MenuList>
                 </ClickAwayListener>

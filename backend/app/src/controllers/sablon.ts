@@ -14,11 +14,11 @@ router.get('/:id', ...rolesGuards(), async (req, res) => {
   res.json(await SablonODM.findById(req.params.id).populate('author').exec())
 })
 
-router.post('/', ...rolesGuards([/*UserRole.PRIMARIE*/]), async (req, res) => {
+router.post('/', ...rolesGuards([UserRole.PRIMARIE]), async (req, res) => {
   res.json(await SablonODM.create({ ...req.body, author: req.user?.id }))
 })
 
-router.put('/:id', ...rolesGuards([/*UserRole.PRIMARIE*/]), async (req, res) => {
+router.put('/:id', ...rolesGuards([UserRole.PRIMARIE]), async (req, res) => {
   const user = req.user
   const sablon = await SablonODM.findById(req.params.id)
     .populate('author')
