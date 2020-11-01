@@ -20,6 +20,8 @@ import CustomInput from "components/CustomInput/CustomInput.js";
 import Button from "components/CustomButtons/Button.js";
 
 import styles from "assets/jss/material-dashboard-react/components/headerLinksStyle.js";
+import { CETATEAN } from "api/roles";
+import { PRIMARIE } from "api/roles";
 
 const useStyles = makeStyles(styles);
 
@@ -194,23 +196,24 @@ export default function AdminNavbarLinks() {
                 <ClickAwayListener onClickAway={handleCloseProfile}>
                   <MenuList role="menu">
                     <MenuItem
-                      onClick={handleCloseProfile}
+                      onClick={() => {
+                        localStorage.setItem("token", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVmOWRhYjg4MGI1Y2U0MGRmZTIzYjZmMSIsInVzZXJuYW1lIjoiY2V0YXRlYW51bCB4IiwiaWF0IjoxNjA0MjE0Nzc4fQ.yS_aC7gUL7IPFRc24fMvD3uXp83nmEmgZiuEnu3tt3g");
+                        localStorage.setItem("role", CETATEAN);
+                        window.location.href = '/';
+                      }}
                       className={classes.dropdownItem}
                     >
-                      Profile
+                      Cetatean
                     </MenuItem>
                     <MenuItem
-                      onClick={handleCloseProfile}
+                      onClick={() => {
+                        localStorage.setItem("token", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVmOWRhM2VmYWJjNjFlMGI0ZjM3Y2Q3ZSIsInVzZXJuYW1lIjoicHJpbWFyaWEgeCIsImlhdCI6MTYwNDIxNDgzM30.3vonUTIVPhEwCjRkuq9Fyby9OSd_zKHZgdaz9-tUX3U");
+                        localStorage.setItem("role", PRIMARIE);
+                        window.location.href = '/';
+                      }}
                       className={classes.dropdownItem}
                     >
-                      Settings
-                    </MenuItem>
-                    <Divider light />
-                    <MenuItem
-                      onClick={handleCloseProfile}
-                      className={classes.dropdownItem}
-                    >
-                      Logout
+                      Primarie
                     </MenuItem>
                   </MenuList>
                 </ClickAwayListener>

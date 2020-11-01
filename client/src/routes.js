@@ -25,7 +25,8 @@ import Notifications from "@material-ui/icons/Notifications";
 import Unarchive from "@material-ui/icons/Unarchive";
 import Language from "@material-ui/icons/Language";
 // core components/views for Admin layout
-import DashboardPage from "views/Dashboard/Dashboard.js";
+import { default as DashboardCetatean } from "views/Dashboard/DashboardCetatean.js";
+import { default as DashboardPrimarie } from "views/Dashboard/DashboardPrimarie.js";
 import UserProfile from "views/UserProfile/UserProfile.js";
 import TableList from "views/TableList/TableList.js";
 import Sabloane from "views/TableList/Sabloane";
@@ -44,7 +45,7 @@ const dashboardRoutesCetatean = [
     name: "Panou de control",
     rtlName: "لوحة القيادة",
     icon: Dashboard,
-    component: DashboardPage,
+    component: DashboardCetatean,
     layout: "/admin"
   },
   {
@@ -71,7 +72,7 @@ const dashboardRoutesPrimarie = [
     name: "Panou de control",
     rtlName: "لوحة القيادة",
     icon: Dashboard,
-    component: DashboardPage,
+    component: DashboardPrimarie,
     layout: "/admin"
   },
   {
