@@ -28,6 +28,7 @@ import Language from "@material-ui/icons/Language";
 import DashboardPage from "views/Dashboard/Dashboard.js";
 import UserProfile from "views/UserProfile/UserProfile.js";
 import TableList from "views/TableList/TableList.js";
+import Sabloane from "views/TableList/Sabloane";
 import Typography from "views/Typography/Typography.js";
 import Icons from "views/Icons/Icons.js";
 import Maps from "views/Maps/Maps.js";
@@ -60,6 +61,14 @@ const dashboardRoutes = [
     component: TableList,
     layout: "/admin"
   },
+  {
+    path: "/sabloane",
+    rtlName: "قائمة الجدول",
+    name: "Sabloane",
+    icon: "content_paste",
+    component: Sabloane,
+    layout: "/admin",
+  }
 ];
 
 export default dashboardRoutes;
