@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { Typography, Dialog, Box, Button, FormControl, Input } from '@material-ui/core';
-import Card from 'components/Card/Card'; 
-import CardBody from 'components/Card/CardBody'; 
-import CardFooter from 'components/Card/CardFooter'; 
-import CardHeader from 'components/Card/CardHeader'; 
+import Card from 'components/Card/Card';
+import CardBody from 'components/Card/CardBody';
+import CardFooter from 'components/Card/CardFooter';
+import CardHeader from 'components/Card/CardHeader';
 import { statusToString } from "api/dosar"
 import { getDosar } from 'api/cetatean';
 import { downloadPath } from 'api/acte';
@@ -27,7 +27,7 @@ function DosarPreview({ dosar, onClose, open }) {
   const [file, setFile] = useState(undefined);
   const isPrimarie = parseInt(localStorage.getItem('role')) === PRIMARIE;
 
-  const [dosarFull, setDosarFull] = useState({ sablon: { necesare: [] } });
+  const [dosarFull, setDosarFull] = useState({ sablon: { necesare: [] }, from: {} });
 
   const classes = useStyles();
 
@@ -39,82 +39,85 @@ function DosarPreview({ dosar, onClose, open }) {
   return (
     <Dialog open={open} onClose={onClose} >
       <Box className={classes.container}>
-        <Card style={{paddingBottom: "1rem"}}>
+        <Card style={{ paddingBottom: "1rem" }}>
           <CardHeader color="info">
             <Typography variant="h2">Vizualizare dosar</Typography>
           </CardHeader>
           <CardBody>
-          <Typography variant="body1" className={classes.field}>
-            <span>Numar inregistrare:</span> {dosar.nrinreg} 
-          </Typography>
-          <Typography variant="body1" className={classes.field}>
-            <span>Denumire:</span> {dosar.name} 
-          </Typography>
-          <Typography variant="body1" className={classes.field}>
-            <span>Stadiu:</span> {statusToString(dosar.status)} 
-          </Typography>
-          <Typography variant="body1" className={classes.field}>
-            <span>Data:</span> {dosar.createdAt} 
-          </Typography>
-          {
-            dosarFull.sablon.necesare.map((elem) => {
-              if (elem.type === "text") return <Typography variant="body1" className={classes.field2}>
-                  <span>{elem.name}:</span> {dosarFull[elem.name]} 
+            <Typography variant="body1" className={classes.field}>
+              <span>Numar inregistrare:</span> {dosar.nrinreg}
+            </Typography>
+            <Typography variant="body1" className={classes.field}>
+              <span>Denumire:</span> {dosar.name}
+            </Typography>
+            <Typography variant="body1" className={classes.field}>
+              <span>Cetatean:</span> {dosarFull.from.username}
+            </Typography>
+            <Typography variant="body1" className={classes.field}>
+              <span>Stadiu:</span> {statusToString(dosar.status)}
+            </Typography>
+            <Typography variant="body1" className={classes.field}>
+              <span>Data:</span> {dosar.createdAt}
+            </Typography>
+            {
+              dosarFull.sablon.necesare.map((elem) => {
+                if (elem.type === "text") return <Typography variant="body1" className={classes.field2}>
+                  <span>{elem.name}:</span> {dosarFull[elem.name]}
                 </Typography>
-              if (elem.type === "file") {
-                return <Typography variant="body1" className={classes.field2}>
-                  <span>{elem.name}:</span> <a href={`${downloadPath}/${dosarFull[elem.name]}`}> Vizualizeaza document </a> 
-                </Typography>
-              }
-              return <></>
-            })
-          }
+                if (elem.type === "file") {
+                  return <Typography variant="body1" className={classes.field2}>
+                    <span>{elem.name}:</span> <a target="_blank" href={`${downloadPath}/${dosarFull[elem.name]}`}> Vizualizeaza document </a>
+                  </Typography>
+                }
+                return <></>
+              })
+            }
           </CardBody>
           <ThemeProvider theme={theme}>
-          {
-            (isPrimarie && dosar.status === 0) ? (<>
-              <FormControl>
-                <CardFooter>
-                  <Button onClick={() => {
-                    uploadAct(file).then((r) => {
+            {
+              (isPrimarie && dosar.status === 0) ? (<>
+                <FormControl>
+                  <CardFooter>
+                    <Button onClick={() => {
+                      uploadAct(file).then((r) => {
+                        updateDosar(dosar._id, {
+                          actRaspuns: r.filename,
+                          status: 2,
+                        });
+                        window.location.href = "/";
+                      });
+                    }} color="primary" variant="contained"> Valideaza </Button>
+                    <Button
+                      variant="contained"
+                      component="label"
+                      startIcon={<PublishIcon />}
+                    >
+                      Upload File
+                    <input
+                        onChange={(e) => { setFile(e.target.files[0]) }}
+                        type="file"
+                        style={{ display: "none" }}
+                      />
+                    </Button>
+
+                    <Button onClick={() => {
                       updateDosar(dosar._id, {
-                        actRaspuns: r.filename,
-                        status: 2,
+                        status: 1,
                       });
                       window.location.href = "/";
-                    });
-                  }} color="primary" variant="contained"> Valideaza </Button>
-                  <Button
-                    variant="contained"
-                    component="label"
-                    startIcon={<PublishIcon/>}
-                  >
-                    Upload File
-                    <input
-                      onChange={(e) => { setFile(e.target.files[0]) }}
-                      type="file"
-                      style={{ display: "none" }}
-                    />
-                  </Button>
+                    }} color="secondary" variant="contained"> Respinge </Button>
+                  </CardFooter>
+                </FormControl>
+              </>) : null
+            }
 
-                  <Button onClick={() => {
-                    updateDosar(dosar._id, {
-                      status: 1,
-                    });
-                    window.location.href = "/";
-                  }} color="secondary" variant="contained"> Respinge </Button>
+            {
+              (!isPrimarie && dosar.status === 2) ? (<>
+                <CardFooter>
+                  <Typography variant="body1">Raspuns: <a target="_blank" href={`${downloadPath}/${dosarFull.actRaspuns}`}> Vizualizeaza document </a> </Typography>
                 </CardFooter>
-              </FormControl>
-            </>) : null
-          }
-
-          {
-            (!isPrimarie && dosar.status === 2) ? (<>
-              <CardFooter>
-                <Typography variant="body1">Raspuns: <a href={`${downloadPath}/${dosarFull.actRaspuns}`}> Vizualizeaza document </a> </Typography>
-              </CardFooter>
-            </>) : null
-          }
+              </>) : null
+            }
           </ThemeProvider>
         </Card>
       </Box>

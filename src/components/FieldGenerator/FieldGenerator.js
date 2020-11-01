@@ -72,7 +72,7 @@ function DosarPreview() {
       name: sablon.titluDosar,
       necesare,
     }).then((r) => {
-      window.location.href = '/admin/sabloane';
+      window.location.href = '/';
     });
   }
 
