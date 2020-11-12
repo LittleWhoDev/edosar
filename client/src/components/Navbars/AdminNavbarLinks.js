@@ -197,7 +197,7 @@ export default function AdminNavbarLinks() {
                   <MenuList role="menu">
                     <MenuItem
                       onClick={() => {
-                        localStorage.setItem("token", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVmOWRhM2VmYWJjNjFlMGI0ZjM3Y2Q3ZSIsInVzZXJuYW1lIjoiUHJpbWFyaWEgTXVuaWNpcGl1bHVpIEJ1Y3VyZXN0aSIsImlhdCI6MTYwNDIxODIxM30.E7c9ll3-t1ELB5auFAbUPHUq0lQ_feVQmgwZbf6o3lE");
+                        localStorage.setItem("token", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVmYTU4OWU4ODIxNDFhMDAyMGJiYzIwNyIsInVzZXJuYW1lIjoiUHJpbWFyaWEgTXVuaWNpcGl1bHVpIEJ1Y3VyZXN0aSIsImlhdCI6MTYwNTE2OTA3Mn0.fa1BcPOXfNFohk4Q55JNHwWA0ob27IhDgZxexzDg8os");
                         localStorage.setItem("role", PRIMARIE);
                         localStorage.setItem("name", "Primaria Municipiului Bucuresti");
                         window.location.href = '/';
@@ -208,37 +208,16 @@ export default function AdminNavbarLinks() {
                     </MenuItem>
                     <MenuItem
                       onClick={() => {
-                        localStorage.setItem("token", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVmOWRhYjg4MGI1Y2U0MGRmZTIzYjZmMSIsInVzZXJuYW1lIjoiSWxpZSBMZW9uYXJkIEFuZHJlaSIsImlhdCI6MTYwNDIxOTcyNH0.tQbQlkCUfCBgSMNBpYY4Lym-Yo3AzAkE3y6lG-CzSVM");
+                        localStorage.setItem("token", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVmYTU4OWY2ODIxNDFhMDAyMGJiYzIwYSIsInVzZXJuYW1lIjoiRmVyYXJ1IE1paGFpbCIsImlhdCI6MTYwNTE2OTE5OH0.kjj5DwU-W73BNoHQEWXEkaQmbfu2ydEedK84NKukzwM");
                         localStorage.setItem("role", CETATEAN);
-                        localStorage.setItem("name", "Andrei Leonard Ilie");
+                        localStorage.setItem("name", "Feraru Mihail");
                         window.location.href = '/';
                       }}
                       className={classes.dropdownItem}
                     >
-                      Cetatean Andrei Leonard Ilie
+                      Cetatean Ferau Mihail
                     </MenuItem>
-                    <MenuItem
-                      onClick={() => {
-                        localStorage.setItem("token", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVmOWU2YWQ5ODU4NmNmMDEyYzNiOTU3ZCIsInVzZXJuYW1lIjoiQWRyaWFuIEFkYW0iLCJpYXQiOjE2MDQyMTk5MDV9.E0b07AxWDlgwlnpuRPn6s7hETX3kbjJW25fzM2TSVvs");
-                        localStorage.setItem("role", CETATEAN);
-                        localStorage.setItem("name", "Adrian Adam");
-                        window.location.href = '/';
-                      }}
-                      className={classes.dropdownItem}
-                    >
-                      Cetatean Adrian Adam
-                    </MenuItem>
-                    <MenuItem
-                      onClick={() => {
-                        localStorage.setItem("token", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVmOWU2YWU1ODU4NmNmMDEyYzNiOTU4MCIsInVzZXJuYW1lIjoiRmVyYXJ1IE1paGFpbCIsImlhdCI6MTYwNDIxOTc5N30.bQ8OdipQRM0ap5EHfuxYorPDjkHQLjEev5GCaPaGnLY");
-                        localStorage.setItem("role", CETATEAN);
-                        localStorage.setItem("name", "Mihail Feraru");
-                        window.location.href = '/';
-                      }}
-                      className={classes.dropdownItem}
-                    >
-                      Cetatean Mihail Feraru
-                    </MenuItem>
+
                   </MenuList>
                 </ClickAwayListener>
               </Paper>

@@ -1,7 +1,7 @@
 import axios from "axios";
 
-export const downloadPath = "http://localhost:3000/acte";
-const apiBase = "http://localhost:3000";
+export const downloadPath = "http://95.179.243.247:3000/acte";
+const apiBase = "http://95.179.243.247:3000";
 
 export async function uploadAct(f) {
     const formData = new FormData();
